@@ -45,9 +45,7 @@ Siga estes passos para configurar a hospedagem do site estático com S3 e CloudF
 2. Escolha **Criar bucket**.
 3. Forneça um **Nome exclusivo para o bucket** (ex: `aws-na-veia-static-site`).
 4. Selecione a **Região da AWS**.
-5. Desative **Bloquear todo o acesso público** (para um bucket privado) e confirme que deseja prosseguir.
-6. Habilite **Versionamento do Bucket** e **Criptografia no Lado do Servidor** (recomendado para produção).
-7. Clique em **Criar bucket**.
+5. Clique em **Criar bucket**.
 
 ### Passo 2: Configurar a Política do Bucket
 
