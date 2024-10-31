@@ -18,90 +18,19 @@ Este projeto demonstra uma arquitetura completa na AWS que integra um site está
 
 ---
 
-## Passo a Passo para Configuração
+## Passo 1
 
-### 1. Configurar o DynamoDB
+Configurar um Site estático básico
 
-1. No console da AWS, vá para **DynamoDB** e crie uma tabela chamada `Orders`.
-2. Defina a tabela com a chave primária `orderId` (String) e adicione outros campos como `customerName`, `orderDate`, `status`, etc.
-3. Insira alguns registros de exemplo para testes.
+- S3
+- CloudFront
 
-### 2. Configurar o AWS Lambda
+## Passo 2
 
-1. Acesse o **AWS Lambda** e crie uma nova função chamada `GetOrderDetails`.
-2. Adicione o seguinte código Python à sua função Lambda:
+Configurar um Site estático para consultar o pedido do DynamoDB
 
-   ```python
-   import json
-import boto3
-from botocore.exceptions import ClientError
-
-# Inicializando o cliente DynamoDB
-dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('PedidosTable')  # Substitua 'Orders' pelo nome da sua tabela
-
-def lambda_handler(event, context):
-    # Log do evento recebido para depuração
-    print("Evento recebido:", event)
-    
-    # Extraindo o ID do pedido dos parâmetros de consulta
-    order_id = event.get('queryStringParameters', {}).get('orderId')
-    
-    # Verificando se o ID do pedido foi fornecido
-    if not order_id:
-        return {
-            'statusCode': 400,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
-                'Access-Control-Allow-Methods': 'OPTIONS,GET'
-            },
-            'body': json.dumps({'message': 'Parâmetro "orderId" é obrigatório.'})
-        }
-    
-    try:
-        # Consultando o DynamoDB usando o orderId
-        response = table.query(
-            KeyConditionExpression=boto3.dynamodb.conditions.Key('orderId').eq(order_id)
-        )
-        
-        # Obter os itens do pedido
-        items = response.get('Items', [])
-        
-        # Verificar se o pedido foi encontrado
-        if not items:
-            return {
-                'statusCode': 404,
-                'headers': {
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
-                    'Access-Control-Allow-Methods': 'OPTIONS,GET'
-                },
-                'body': json.dumps({'message': 'Pedido não encontrado.'})
-            }
-        
-        # Retornar os detalhes do pedido
-        return {
-            'statusCode': 200,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
-                'Access-Control-Allow-Methods': 'OPTIONS,GET'
-            },
-            'body': json.dumps(items)  # Retorna os itens encontrados
-        }
-        
-    except ClientError as e:
-        # Log do erro para depuração
-        print("Erro ao acessar o DynamoDB:", e)
-        
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
-                'Access-Control-Allow-Methods': 'OPTIONS,GET'
-            },
-            'body': json.dumps({'message': 'Erro ao acessar o DynamoDB', 'error': str(e)})
-        }
-
+- S3
+- CloudFront
+- API GATEWAY
+- LAMBDA
+- DYNAMODB
