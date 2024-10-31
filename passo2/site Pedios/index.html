@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Pedidos - AWS na Veia</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Consulta de Pedidos - AWS na Veia</h1>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <h2>Insira o Código do Pedido:</h2>
+            <input type="text" id="order_id" placeholder="Digite o código do pedido">
+            <button id="consultarPedido">Consultar</button>
+        </div>
+
+        <div class="table-container">
+            <h3>Detalhes do Pedido</h3>
+            <table id="orderDetails" class="display">
+                <thead>
+                    <tr>
+                        <th>ID do Pedido</th>
+                        <th>Nome do Cliente</th>
+                        <th>E-mail do Cliente</th>
+                        <th>Status</th>
+                        <th>Data do Pedido</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Resultados preenchidos dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="site.js"></script>
+</body>
+</html>
