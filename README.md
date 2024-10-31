@@ -1,35 +1,35 @@
-# AWS Dynamic Site with API Gateway, Lambda, and DynamoDB
+# Site Dinâmico na AWS com API Gateway, Lambda e DynamoDB
 
-This project demonstrates a complete AWS architecture that integrates a static site hosted on S3 with an API Gateway, Lambda, and DynamoDB. The static site allows users to query order information from a DynamoDB table using a serverless architecture for a fast, scalable, and secure experience.
+Este projeto demonstra uma arquitetura completa na AWS que integra um site estático hospedado no S3 com um API Gateway, Lambda e DynamoDB. O site permite que usuários consultem informações de pedidos em um banco de dados DynamoDB utilizando uma arquitetura serverless, proporcionando uma experiência rápida, escalável e segura.
 
-## Project Architecture
+## Arquitetura do Projeto
 
-1. **Amazon S3** - Hosts the static site files (HTML, CSS, JavaScript).
-2. **Amazon CloudFront** - Distributes the S3 site globally and provides a secure entry point.
-3. **Amazon API Gateway** - Acts as the entry point for API calls from the site to AWS Lambda.
-4. **AWS Lambda** - Processes API requests, retrieves data from DynamoDB, and sends responses.
-5. **Amazon DynamoDB** - Stores order information for quick retrieval.
+1. **Amazon S3** - Hospeda os arquivos do site estático (HTML, CSS, JavaScript).
+2. **Amazon CloudFront** - Distribui o site globalmente, garantindo rapidez e segurança.
+3. **Amazon API Gateway** - Atua como ponto de entrada para chamadas da API do site para o AWS Lambda.
+4. **AWS Lambda** - Processa as solicitações da API, recupera dados do DynamoDB e retorna respostas.
+5. **Amazon DynamoDB** - Armazena informações de pedidos para consulta rápida.
 
-## Prerequisites
+## Pré-requisitos
 
-- AWS account
-- Basic knowledge of AWS services (S3, API Gateway, Lambda, and DynamoDB)
-- Files for the static site (HTML, CSS, JavaScript)
+- Conta AWS
+- Conhecimento básico dos serviços AWS (S3, API Gateway, Lambda e DynamoDB)
+- Arquivos do site estático (HTML, CSS, JavaScript)
 
 ---
 
-## Step-by-Step Setup
+## Passo a Passo para Configuração
 
-### 1. Set Up DynamoDB
+### 1. Configurar o DynamoDB
 
-1. In the AWS Console, go to **DynamoDB** and create a table named `Orders`.
-2. Define the table with a primary key `orderId` (String) and add any additional fields like `customerName`, `orderDate`, `status`, etc.
-3. Insert some sample records to be used for testing.
+1. No console da AWS, vá para **DynamoDB** e crie uma tabela chamada `Orders`.
+2. Defina a tabela com a chave primária `orderId` (String) e adicione outros campos como `customerName`, `orderDate`, `status`, etc.
+3. Insira alguns registros de exemplo para testes.
 
-### 2. Configure AWS Lambda
+### 2. Configurar o AWS Lambda
 
-1. Go to **AWS Lambda** and create a new Lambda function named `GetOrderDetails`.
-2. Add the following Python code to your Lambda function:
+1. Acesse o **AWS Lambda** e crie uma nova função chamada `GetOrderDetails`.
+2. Adicione o seguinte código Python à sua função Lambda:
 
    ```python
    import json
@@ -42,13 +42,13 @@ This project demonstrates a complete AWS architecture that integrates a static s
    def lambda_handler(event, context):
        order_id = event.get('queryStringParameters', {}).get('orderId')
        if not order_id:
-           return {'statusCode': 400, 'body': json.dumps({'message': 'Order ID is required'})}
+           return {'statusCode': 400, 'body': json.dumps({'message': 'Order ID é obrigatório'})}
 
        try:
            response = table.query(KeyConditionExpression=boto3.dynamodb.conditions.Key('orderId').eq(order_id))
            items = response.get('Items', [])
            if not items:
-               return {'statusCode': 404, 'body': json.dumps({'message': 'Order not found'})}
+               return {'statusCode': 404, 'body': json.dumps({'message': 'Pedido não encontrado'})}
 
            return {
                'statusCode': 200,
@@ -67,5 +67,5 @@ This project demonstrates a complete AWS architecture that integrates a static s
                    'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
                    'Access-Control-Allow-Methods': 'OPTIONS,GET'
                },
-               'body': json.dumps({'message': 'Error accessing DynamoDB', 'error': str(e)})
+               'body': json.dumps({'message': 'Erro ao acessar o DynamoDB', 'error': str(e)})
            }
