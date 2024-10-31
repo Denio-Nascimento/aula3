@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    max-width: 900px;
+    margin: auto;
+    background-color: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.left, .right {
+    padding: 20px;
+    width: 50%;
+}
+
+.left {
+    background-color: #eaeff2;
+    text-align: center;
+    position: relative;
+}
+
+.right {
+    background-color: #ffffff;
+}
+
+.logo {
+    width: 200px;
+    margin: 20px 0;
+    position: relative;
+    animation: slideIn 2s ease-out forwards;
+}
+
+.author {
+    margin-top: 10px;
+    font-style: italic;
+    color: #666;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #0073e6;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+/* Animação para o logo deslizar da esquerda e parar */
+@keyframes slideIn {
+    0% { 
+        transform: translateX(-200px); /* Começa fora da tela */
+        opacity: 0; /* Invisível no início */
+    }
+    100% { 
+        transform: translateX(0); /* Fica na posição normal */
+        opacity: 1; /* Aparece completamente */
+    }
+}
