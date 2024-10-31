@@ -1,7 +1,3 @@
-# Criação do conteúdo para o arquivo README.md
-
-# Conteúdo detalhado do README.md
-readme_content = """
 # AWS Dynamic Site with API Gateway, Lambda, and DynamoDB
 
 This project demonstrates a complete AWS architecture that integrates a static site hosted on S3 with an API Gateway, Lambda, and DynamoDB. The static site allows users to query order information from a DynamoDB table using a serverless architecture for a fast, scalable, and secure experience.
